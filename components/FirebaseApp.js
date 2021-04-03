@@ -4,12 +4,17 @@ import { View, Text, FlatList } from 'react-native'
 import firestore from '@react-native-firebase/firestore'
 
 import Card from './card/Card'
+import CarItem from './card/CardItem'
+import MyButton from './card/Button'
 import CardItem from './card/CardItem'
 
 export default class FirebaseApp extends Component {
 
   constructor(props) {
     super(props)
+    //this.getUserV1()
+    //this.getUserV2()
+    //this.listUsers()
     this.state = { name: '', users: [] }
   }
 
@@ -68,11 +73,56 @@ export default class FirebaseApp extends Component {
     )
   }
 
+  addUser = () => {
+    firestore()
+      .collection('users')
+      .add({
+        name: 'João Marcelo',
+      })
+      .then(() => {
+        console.log('User added!');
+      });
+    this.listUsers()
+  }
+
+  updateUser = () => {
+    firestore()
+      .collection('users')
+      .doc('I6B683Xpmc3dH4cPV7IU')
+      .update({
+        name: 'Fulano de Tal da Silva',
+      })
+      .then(() => {
+        console.log('User updated!');
+      });
+    this.listUsers()
+  }
+
+  deleteUser = () => {
+    firestore()
+      .collection('users')
+      .doc('I6B683Xpmc3dH4cPV7IU')
+      .delete()
+      .then(() => {
+        console.log('User deleted!');
+      });
+      this.listUsers()
+  }
+
   render() {
     return (
       <Card>
         <CardItem>
           {this.renderUsers()}
+        </CardItem>
+        <CardItem>
+          <MyButton title='Add User' onPress={this.addUser} />
+        </CardItem>
+        <CardItem>
+          <MyButton title='Update User' onPress={this.updateUser} />
+        </CardItem>
+        <CardItem>
+          <MyButton title='Delete User' onPress={this.deleteUser}/>
         </CardItem>
       </Card>
     )

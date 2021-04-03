@@ -1,15 +1,17 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {Component} from 'react'
+import {View,Text} from 'react-native'
 
-// import { Container } from './styles';
-import FirebaseApp from './components/FirebaseApp';
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-const App = () => {
-  return (
-    <View>
-      <FirebaseApp />
-    </View>
-  );
-};
+import Routes from './components/Routes'
 
-export default App;
+export default class App extends Component{
+  render(){
+    return(
+      <SafeAreaProvider>
+        <Routes/>
+      </SafeAreaProvider>
+       
+    )
+  }
+}
